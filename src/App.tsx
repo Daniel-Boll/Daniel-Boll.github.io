@@ -9,6 +9,7 @@ function App() {
       <div className="socials">
         <a href="https://github.com/Daniel-Boll">Github</a>
         <a href="https://linkedin.com/in/Daniel-Boll">LinkedIn</a>
+        <a href="mailto:danielboll.academico@gmail.com">Email</a>
       </div>
     </div>
   );
