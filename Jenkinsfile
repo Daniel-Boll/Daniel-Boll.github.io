@@ -1,6 +1,12 @@
+def build_path = '.'
+
 pipeline {
   agent any
-
+  
+  options {
+    ansiColor('xterm')
+  }
+  
   stages {
     stage("Node docker") {
       agent {
@@ -22,11 +28,22 @@ pipeline {
             sh "npm run build"
           }
         }
+        
+        stage("Getting build path") {
+          steps {
+            sh "pwd > pwd.txt"
+            
+            script {
+              build_path = readFile("pwd.txt").trim()
+            }
+          }
+        }
       }
     }
 
     stage("Deploy") {
       steps {
+        sh "cd ${build_path} && ls"
         sh "chmod +x ./scripts/deploy.sh"
         sh "./scripts/deploy.sh"
       }
