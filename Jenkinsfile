@@ -1,21 +1,27 @@
 pipeline {
-  agent {
-    docker {
-      image "node:16-alpine"
-      args "-p 3000:3000"
-    }
-  }
+  agent any
 
   stages {
-    stage("Fetch dependencies") {
-      steps {
-        sh "npm install"
+    stage("Node docker") {
+      agent {
+        docker {
+          image "node:16-alpine"
+          args "-p 3000:3000"
+        }
       }
-    }
 
-    stage("Build") {
-      steps {
-        sh "npm run build"
+      stages {
+        stage("Fetch dependencies") {
+          steps {
+            sh "npm install"
+          }
+        }
+
+        stage("Build") {
+          steps {
+            sh "npm run build"
+          }
+        }
       }
     }
 
