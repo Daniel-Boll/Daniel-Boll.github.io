@@ -1,5 +1,3 @@
-def build_path = '.'
-
 pipeline {
   agent any
   
@@ -12,7 +10,7 @@ pipeline {
       agent {
         docker {
           image "node:16-alpine"
-          args "-p 3000:3000"
+          args "-u 1000 -p 3000:3000"
         }
       }
 
@@ -28,24 +26,15 @@ pipeline {
             sh "npm run build"
           }
         }
-        
-        stage("Getting build path") {
-          steps {
-            sh "pwd > pwd.txt"
-            
-            script {
-              build_path = readFile("pwd.txt").trim()
-            }
-          }
-        }
       }
     }
 
     stage("Deploy") {
       steps {
-        sh "cd ${build_path} && ls"
-        sh "chmod +x ./scripts/deploy.sh"
-        sh "./scripts/deploy.sh"
+        dir("${env.WORKSPACE}@2") {
+          sh "chmod +x ./scripts/deploy.sh"
+          sh "./scripts/deploy.sh"
+        }
       }
     }
   }
