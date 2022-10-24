@@ -10,7 +10,7 @@ terraform {
 provider "aws" {
   shared_config_files      = ["/home/danielboll/.aws/config"]
   shared_credentials_files = ["/home/danielboll/.aws/credentials"]
-  region = "us-east-2"
+  region                   = "us-east-2"
 }
 
 # Create a VPC
@@ -65,6 +65,12 @@ resource "aws_security_group" "ssh-allowed" {
   ingress {
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
