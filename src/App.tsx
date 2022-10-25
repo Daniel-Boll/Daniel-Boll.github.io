@@ -11,6 +11,11 @@ function App() {
         <a href="https://linkedin.com/in/Daniel-Boll">LinkedIn</a>
         <a href="mailto:danielboll.academico@gmail.com">Email</a>
       </div>
+
+      <div className="projects">
+        {/* Button to go to games */}
+        <a href="/games">Games</a>
+      </div>
     </div>
   );
 }
